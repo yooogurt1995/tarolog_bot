@@ -9,7 +9,7 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
 # Пути к файлам
-VIDEO_PATH = "/Users/egor/pos/kru"
+VIDEO_PATH = "/root/tarolog_bot"
 VIDEO_1 = f"{VIDEO_PATH}/video1.mp4"
 VIDEO_2 = f"{VIDEO_PATH}/video2.mp4"
 VIDEO_3 = f"{VIDEO_PATH}/video3.mp4"
