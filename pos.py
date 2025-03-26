@@ -9,21 +9,43 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
 # Пути к файлам
-VIDEO_PATH = "/root/tarolog_bot/kru"
+VIDEO_PATH = "/Users/egor/pos/kru"
 VIDEO_1 = f"{VIDEO_PATH}/video1.mp4"
 VIDEO_2 = f"{VIDEO_PATH}/video2.mp4"
 VIDEO_3 = f"{VIDEO_PATH}/video3.mp4"
 IMAGE_CLUB = f"{VIDEO_PATH}/club.png"
 
 # Сообщения
-MESSAGE_1 = ("Настало время узнать правду, возможно горькую, но правду. \n"
-             "Перед тем, как ты прочтешь статью, постарайся настроиться на то, чтобы быть не предвзятой, а рассматривать ситуацию с нескольких сторон.\n"
-             "Представь, что ты стоишь недалеко от вашей пары и спокойно наблюдаешь за развитием событий. Представила? Тогда ты готова читать статью. \n"
+MESSAGE_1 = ("Настало время узнать правду, возможно горькую, но правду.
+
+"
+             "Перед тем, как ты прочтешь статью, постарайся настроиться на то, чтобы быть не предвзятой, а рассматривать ситуацию с нескольких сторон.
+
+"
+             "Представь, что ты стоишь недалеко от вашей пары и спокойно наблюдаешь за развитием событий.
+
+"
+             "Представила?
+
+"
+             "Тогда ты готова читать статью.
+
+"
              "https://teletype.in/@taro_venger/681h3YQO3Cg")
 
-MESSAGE_2 = ("В клубе тебя ждет не только расклады таро и поддерживающее окружение, но и полный доступ ко всем возможностям моего авторского бота с метафорическими картами.\n"
-             "Что такое метафорические карты и как с ними работать ты узнаешь внутри. Также с помощью бота ты можешь ответить на многие свои вопросы касаемо твоих отношений.\n"
-             "С помощью карт ты можешь вытащить всю правду из своего подсознания. Предлагаю тебе познакомится с ним прямо сейчас. @YourMetaphorical_Bot")
+MESSAGE_2 = ("В клубе тебя ждет не только расклады таро и поддерживающее окружение, но и полный доступ ко всем возможностям моего авторского бота с метафорическими картами.
+
+"
+             "Что такое метафорические карты и как с ними работать ты узнаешь внутри.
+
+"
+             "Также с помощью бота ты можешь ответить на многие свои вопросы касаемо твоих отношений.
+
+"
+             "С помощью карт ты можешь вытащить всю правду из своего подсознания.
+
+"
+             "Предлагаю тебе познакомится с ним прямо сейчас. @YourMetaphorical_Bot")
 
 MESSAGE_3 = "Чтобы вступить в клуб, переходи сюда:"
 JOIN_BUTTON = InlineKeyboardMarkup(inline_keyboard=[
@@ -56,7 +78,8 @@ async def send_welcome(message: types.Message):
         await asyncio.sleep(30)
         
         # Отправка изображения клуба
-        await bot.send_photo(chat_id, FSInputFile(IMAGE_CLUB))
+        await asyncio.sleep(60)
+        await bot.send_photo(chat_id, FSInputFile(IMAGE_CLUB), caption=MESSAGE_3, reply_markup=JOIN_BUTTON)
         
         # Отправка финального сообщения с кнопкой
         await message.answer(MESSAGE_3, reply_markup=JOIN_BUTTON)
@@ -66,8 +89,15 @@ async def send_welcome(message: types.Message):
         print(f"Ошибка: {e}")
 
 async def main():
+    dp = Dispatcher()
     dp.message.register(send_welcome)
-    await dp.start_polling(bot)
+
+    try:
+        await dp.start_polling(bot)
+    except Exception as e:
+        print(f"Ошибка: {e}")
+    finally:
+        await bot.session.close()
 
 if __name__ == "__main__":
     asyncio.run(main())
