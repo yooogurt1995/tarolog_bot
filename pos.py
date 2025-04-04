@@ -66,9 +66,6 @@ async def send_welcome(message: types.Message):
         # Отправка изображения клуба
         await asyncio.sleep(60)
         await bot.send_photo(chat_id, FSInputFile(IMAGE_CLUB), caption=MESSAGE_3, reply_markup=JOIN_BUTTON)
-        
-        # Отправка финального сообщения с кнопкой
-        await message.answer(MESSAGE_3, reply_markup=JOIN_BUTTON)
     
     except Exception as e:
         await message.answer("Ошибка отправки файлов. Проверь путь к файлам.")
